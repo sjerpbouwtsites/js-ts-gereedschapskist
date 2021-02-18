@@ -26,6 +26,7 @@ if (!document.getElementById('events-table-styles')){
     }
   
   `;
+  document.head.appendChild(eventsTableStyles)
 }
 
 function renderTable() {
