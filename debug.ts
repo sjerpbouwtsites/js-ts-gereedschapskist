@@ -23,19 +23,24 @@ if (!document.getElementById('events-table-styles')){
       top: 0;
       left: 0;
       z-index: 99999999;
+      background-color: white;
+      padding: 10px;
     }
-  
+    .event-stats-cell + .event-stats-cell {
+      padding-left: 20px;
+    }
   `;
+
   document.head.appendChild(eventsTableStyles)
 }
 
 function renderTable() {
   let tableRows = '';
   for (var name in listenerCount) {
-    tableRows += '<tr><td>' + name + '</td><td>' + listenerCount[name] + '</td><td data-name="' + name + '">' + (eventCount[name] || 0) + '</td></tr>';
+    tableRows += '<tr class="event-stats-row"><td class="event-stats-cell event-stats-cell--name">' + name + '</td><td class="event-stats-cell event-stats-cell--listener-count">' + listenerCount[name] + '</td><td class="event-stats-cell event-stats-cell--handlers-called" data-name="' + name + '">' + (eventCount[name] || 0) + '</td></tr>';
   }
   document.getElementById('events-stats').innerHTML = `
-  <tr><th>Event Name</th><th># Listeners</th><th># Handlers Called</th></tr>
+  <tr class='event-stats-row event-stats-row--head'><th class='event-stats-cell'>Event Name</th><th class='event-stats-cell'># Listeners</th><th class='event-stats-cell'># Handlers Called</th></tr>
   ${tableRows}  
   `;
 }
@@ -62,4 +67,6 @@ EventTarget.prototype.addEventListener = function(eventName, eventHandler)
 };  
 }
 
-overwriteEventListener();
+module.exports = {
+  overwriteEventListener
+}
